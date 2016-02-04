@@ -12,4 +12,7 @@
   		<scope>provided</scope>
   	</dependency>
   </dependencies>
+  <build>
+  	<finalName>redirect</finalName>
+  </build>
 </project>
