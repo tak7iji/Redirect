@@ -17,7 +17,7 @@
 
 	<bean id="validator"
     	class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
-		<property name="providerClass" value="org.hibernate.validator.HibernateProvider"/>
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>
   	</bean>
 
     <mvc:annotation-driven validator="validator">
