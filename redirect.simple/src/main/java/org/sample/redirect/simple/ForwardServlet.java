@@ -17,7 +17,7 @@ public class ForwardServlet extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("URI: "+req.getRequestURI());
-		RequestDispatcher rd = this.getServletContext().getNamedDispatcher("default");
+		RequestDispatcher rd = this.getServletContext().getNamedDispatcher("default2");
 		rd.forward(req, res);
 	}
 

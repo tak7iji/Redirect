@@ -1,36 +1,109 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE web-app
-    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-    "http://java.sun.com/dtd/web-app_2_3.dtd">
-<web-app> 
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    version="3.0" metadata-complete="true">
+
     <filter>
     	<filter-name>wrappingFilter</filter-name>
     	<filter-class>org.sample.redirect.simple.WrappingFilter</filter-class>
     </filter>
-
     <filter-mapping>
     	<filter-name>wrappingFilter</filter-name>
 		<url-pattern>/wrap/*</url-pattern>    	
     </filter-mapping>
-    
+
+    <filter>
+    	<filter-name>errorLoggingFilter</filter-name>
+    	<filter-class>org.sample.redirect.simple.LoggingFilter</filter-class>
+    	<init-param>
+    		<param-name>type</param-name>
+    		<param-value>ERROR</param-value>
+    	</init-param>
+    </filter>
+    <filter-mapping>
+    	<filter-name>errorLoggingFilter</filter-name>
+		<url-pattern>/*</url-pattern>    	
+		<dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+
+    <filter>
+    	<filter-name>forwardLoggingFilter</filter-name>
+    	<filter-class>org.sample.redirect.simple.LoggingFilter</filter-class>
+    	<init-param>
+    		<param-name>type</param-name>
+    		<param-value>FORWARD</param-value>
+    	</init-param>
+    </filter>
+    <filter-mapping>
+    	<filter-name>forwardLoggingFilter</filter-name>
+		<url-pattern>/*</url-pattern>    	
+		<dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+
+    <filter>
+    	<filter-name>includeLoggingFilter</filter-name>
+    	<filter-class>org.sample.redirect.simple.LoggingFilter</filter-class>
+    	<init-param>
+    		<param-name>type</param-name>
+    		<param-value>INCLUDE</param-value>
+    	</init-param>
+    </filter>
+    <filter-mapping>
+    	<filter-name>includeLoggingFilter</filter-name>
+		<url-pattern>/*</url-pattern>    	
+		<dispatcher>INCLUDE</dispatcher>
+    </filter-mapping>
+
+    <filter>
+    	<filter-name>requestLoggingFilter</filter-name>
+    	<filter-class>org.sample.redirect.simple.LoggingFilter</filter-class>
+    	<init-param>
+    		<param-name>type</param-name>
+    		<param-value>REQUEST</param-value>
+    	</init-param>
+    </filter>
+    <filter-mapping>
+    	<filter-name>requestLoggingFilter</filter-name>
+		<url-pattern>/*</url-pattern>    	
+		<dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
     <servlet>
     	<servlet-name>wrap</servlet-name>
     	<servlet-class>org.sample.redirect.simple.ForwardServlet</servlet-class>
     </servlet>
-
-    <servlet>
-    	<servlet-name>nonwrap</servlet-name>
-    	<servlet-class>org.sample.redirect.simple.ForwardServlet</servlet-class>
-    </servlet>
-
     <servlet-mapping>
     	<servlet-name>wrap</servlet-name>
     	<url-pattern>/wrap/*</url-pattern>
     </servlet-mapping>
-    
+
+    <servlet>
+    	<servlet-name>nonwrap</servlet-name>
+    	<servlet-class>org.sample.redirect.simple.ForwardServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
     	<servlet-name>nonwrap</servlet-name>
     	<url-pattern>/nonwrap/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>default2</servlet-name>
+        <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>0</param-value>
+        </init-param>
+        <init-param>
+            <param-name>listings</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>default2</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
 	<error-page>
