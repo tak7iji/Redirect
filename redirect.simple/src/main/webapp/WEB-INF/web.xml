@@ -4,35 +4,37 @@
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app> 
     <filter>
-    	<filter-name>logginFilter</filter-name>
-    	<filter-class>org.sample.redirect.simple.LoggingFilter</filter-class>
-    </filter>
-    <filter>
-    	<filter-name>forwardFilter</filter-name>
-    	<filter-class>org.sample.redirect.simple.ForwardFilter</filter-class>
+    	<filter-name>wrappingFilter</filter-name>
+    	<filter-class>org.sample.redirect.simple.WrappingFilter</filter-class>
     </filter>
 
     <filter-mapping>
-    	<filter-name>logginFilter</filter-name>
-		<url-pattern>/*</url-pattern>    	
-    </filter-mapping>
-    
-    <filter-mapping>
-    	<filter-name>forwardFilter</filter-name>
-		<url-pattern>/filter/*</url-pattern>    	
+    	<filter-name>wrappingFilter</filter-name>
+		<url-pattern>/wrap/*</url-pattern>    	
     </filter-mapping>
     
     <servlet>
-    	<servlet-name>ForwardServlet</servlet-name>
+    	<servlet-name>wrap</servlet-name>
     	<servlet-class>org.sample.redirect.simple.ForwardServlet</servlet-class>
     </servlet>
+
+    <servlet>
+    	<servlet-name>nonwrap</servlet-name>
+    	<servlet-class>org.sample.redirect.simple.ForwardServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
-    	<servlet-name>ForwardServlet</servlet-name>
-    	<url-pattern>/servlet/*</url-pattern>
+    	<servlet-name>wrap</servlet-name>
+    	<url-pattern>/wrap/*</url-pattern>
     </servlet-mapping>
     
+    <servlet-mapping>
+    	<servlet-name>nonwrap</servlet-name>
+    	<url-pattern>/nonwrap/*</url-pattern>
+    </servlet-mapping>
+
 	<error-page>
 		<error-code>404</error-code>
-		<location>/WEB-INF/views/error/notFound.html</location>
+		<location>/WEB-INF/views/error/notFound.jsp</location>
 	</error-page>
 </web-app>

@@ -12,25 +12,16 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LoggingFilter implements Filter {
-	private ServletContext servletContext;
+public class WrappingFilter implements Filter {
 
 	public void init(FilterConfig filterConfig) throws ServletException {
-		servletContext = filterConfig.getServletContext();
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		System.out.println("Request path: "+req.getRequestURI());
-		if(servletContext.getMajorVersion() >= 3)
-			System.out.println("Status code(before): "+res.getStatus());
-		
+		System.out.println("Wrapping Response.");
 		if(!response.isCommitted())
-			chain.doFilter(request, response);
-
-		if(servletContext.getMajorVersion() >= 3)
-			System.out.println("Status code(after): "+res.getStatus());
+			chain.doFilter(request, new CustomServletResponseWrapper(res));
 	}
 
 	public void destroy() {
